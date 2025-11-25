@@ -1,5 +1,7 @@
 import java.time.LocalDateTime;
+
 public class Transacao {
+
     private LocalDateTime data;
     private String tipo;
     private double valor;
@@ -22,7 +24,8 @@ public class Transacao {
         return valor;
     }
 
+    @Override
     public String toString() {
-        return (data + " - " + tipo + " - R$ " + valor);
+        return data + " - " + tipo + " - R$ " + String.format("%.2f", valor);
     }
 }

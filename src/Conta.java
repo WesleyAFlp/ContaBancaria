@@ -2,41 +2,51 @@
 import java.util.List;
 
 public abstract class Conta {
+
     protected String numero;
     protected String titular;
     protected double saldo;
     protected List<Transacao> historicoTransacoes;
 
-    public Conta(String numero, String titular, double saldo) {
+    public Conta(String numero, String titular, double saldoInicial) {
         this.numero = numero;
         this.titular = titular;
         this.historicoTransacoes = new ArrayList<>();
 
-        if (saldo < 0.0) {
-            System.out.println("Aviso: Saldo inicial negativo. Definindo para 0.0.");
+        if (saldoInicial < 0) {
+            System.out.println("Aviso: saldo inicial negativo. Definido como 0.");
             this.saldo = 0.0;
         } else {
-            this.saldo = saldo;
+            this.saldo = saldoInicial;
         }
     }
 
-    // --- ADICIONE ISTO AQUI ---
-    public List<Transacao> getHistorico() {
-        return this.historicoTransacoes;
+    public String getNumero() {
+        return numero;
     }
-    // ---------------------------
 
-    public String getNumero() { return numero; }
-    public String getTitular() { return titular; }
-    public double getSaldo() { return saldo; }
+    public String getTitular() {
+        return titular;
+    }
 
-    public abstract void sacar(double valor);
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public List<Transacao> getHistorico() {
+        return historicoTransacoes;
+    }
+
+    public abstract void sacar(double valor) throws SaldoInsuficienteException;
 
     public void depositar(double valor) {
         if (valor > 0) {
             this.saldo += valor;
+
+            // registra transação
+            historicoTransacoes.add(new Transacao("Depósito", valor));
         } else {
-            System.out.println("Não é possível depositar valor negativo ou zero.");
+            System.out.println("Valor inválido para depósito!");
         }
     }
 }
