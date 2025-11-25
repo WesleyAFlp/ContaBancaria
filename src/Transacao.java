@@ -4,21 +4,25 @@ public class Transacao {
     private String tipo;
     private double valor;
 
-    public Transacao(String tipo, double valor){
+    public Transacao(String tipo, double valor) {
         this.data = LocalDateTime.now();
-        this.tipo = tipo; this.valor = valor;
+        this.tipo = tipo;
+        this.valor = valor;
     }
 
-    public LocalDateTime getData(){
+    public LocalDateTime getData() {
         return data;
     }
 
     public String getTipo() {
         return tipo;
     }
-    public double getValor(){
+
+    public double getValor() {
         return valor;
     }
-    public String toString(){
-        return (data + " - " + tipo+" - R$ "+ valor);
+
+    public String toString() {
+        return (data + " - " + tipo + " - R$ " + valor);
     }
+}
