@@ -18,7 +18,7 @@ public class Banco {
         return contas.get(numero);
     }
 
-     //* Método para realizar transferência entre duas contas.
+     //* Metodo para realizar transferência entre duas contas.
      //* Ele:
      //* 1. Busca a conta de origem e de destino
      //* 2. Verifica se ambas existem

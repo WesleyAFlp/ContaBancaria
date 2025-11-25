@@ -15,12 +15,12 @@ public class ContaCorrente extends Conta {
         this.historicoTransacoes = new ArrayList<>();
     }
 
-    // Método getter para o limite (opcional, mas útil)
+    // Metodo getter para o limite (opcional, mas útil)
     public double getLimiteChequeEspecial() {
         return limiteChequeEspecial;
     }
 
-    // 4. Sobrescreve o método sacar(double valor) (Polimorfismo).
+    // 4. Sobrescreve o metodo sacar(double valor) (Polimorfismo).
     @Override
     public void sacar(double valor) {
         if (valor <= 0) {
@@ -51,7 +51,7 @@ public class ContaCorrente extends Conta {
         }
     }
 
-    // Sobrescreve o método depositar para também registrar a transação
+    // Sobrescreve o metodo depositar para também registrar a transação
     @Override
     public void depositar(double valor){
         if (valor > 0){
@@ -68,7 +68,7 @@ public class ContaCorrente extends Conta {
         }
     }
 
-    // Método para imprimir o histórico (Adicional)
+    // Metodo para imprimir o histórico (Adicional)
     public void imprimirHistorico() {
         System.out.println("\n--- Histórico de Transações ---");
         if (historicoTransacoes.isEmpty()) {

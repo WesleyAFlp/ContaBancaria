@@ -18,7 +18,7 @@ public class ContaPoupanca extends Conta {
 
         // se o valor for maior do que o saldo, lança a SaldoInsuficienteException
         if (valor > this.saldo) {
-            throw new SaldoInsuficienteException("Saldo insuficiente para realizar o saque.");
+            throw new SaldoInsuficiente("Saldo insuficiente para realizar o saque.");
         }
 
         this.saldo -= valor;

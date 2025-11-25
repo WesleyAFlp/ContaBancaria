@@ -1,13 +1,12 @@
 ﻿import java.util.ArrayList;
 import java.util.List;
-// Criando a classe abstrata
+
 public abstract class Conta {
     protected String numero;
     protected String titular;
     protected double saldo;
     protected List<Transacao> historicoTransacoes;
 
-    // Construtor da class
     public Conta(String numero, String titular, double saldo) {
         this.numero = numero;
         this.titular = titular;
@@ -19,46 +18,25 @@ public abstract class Conta {
         } else {
             this.saldo = saldo;
         }
-
     }
 
-    // Métodos getters and setters
-    // Número da conta
-    public String getNumero() {
-        System.out.println("NÚMERO: " + this.numero);
-        return numero;
+    // --- ADICIONE ISTO AQUI ---
+    public List<Transacao> getHistorico() {
+        return this.historicoTransacoes;
     }
+    // ---------------------------
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    // Titular da conta
-    public String getTitular() {
-        System.out.println("TITULAR: " + this.titular);
-        return titular;
-    }
-
-    public void setTitular(String titular) {
-        this.titular = titular;
-    }
-
-
-    public double getSaldo() {
-        System.out.println("SALDO: " + this.saldo);
-        return this.saldo; // Adicionado o retorno
-    }
-
-    // Métodos
+    public String getNumero() { return numero; }
+    public String getTitular() { return titular; }
+    public double getSaldo() { return saldo; }
 
     public abstract void sacar(double valor);
 
-    // Método depositar sobrescrito em ContaCorrente para incluir registro de Transacao
     public void depositar(double valor) {
         if (valor > 0) {
             this.saldo += valor;
         } else {
-            System.out.println("Não é possível depositar um valor negativo ou igual a 0!");
+            System.out.println("Não é possível depositar valor negativo ou zero.");
         }
     }
 }
