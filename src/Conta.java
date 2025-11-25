@@ -1,52 +1,43 @@
-﻿import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Conta {
 
-    protected String numero;
-    protected String titular;
-    protected double saldo;
-    protected List<Transacao> historicoTransacoes;
+    private String numero;
+    private String titular;
+    private double saldo;
+    private List<Transacao> historicoTransacoes;
 
     public Conta(String numero, String titular, double saldoInicial) {
+        if (saldoInicial < 0) {
+            throw new IllegalArgumentException("Saldo inicial não pode ser negativo.");
+        }
+
         this.numero = numero;
         this.titular = titular;
+        this.saldo = saldoInicial;
         this.historicoTransacoes = new ArrayList<>();
+    }
 
-        if (saldoInicial < 0) {
-            System.out.println("Aviso: saldo inicial negativo. Definido como 0.");
-            this.saldo = 0.0;
-        } else {
-            this.saldo = saldoInicial;
+    public String getNumero() { return numero; }
+    public String getTitular() { return titular; }
+    public double getSaldo() { return saldo; }
+    public List<Transacao> getHistorico() { return historicoTransacoes; }
+
+    public void depositar(double valor) {
+        if (valor <= 0) {
+            System.out.println("Depósito deve ser positivo.");
+            return;
         }
-    }
 
-    public String getNumero() {
-        return numero;
-    }
-
-    public String getTitular() {
-        return titular;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public List<Transacao> getHistorico() {
-        return historicoTransacoes;
+        saldo += valor;
+        historicoTransacoes.add(new Transacao("Depósito", valor));
     }
 
     public abstract void sacar(double valor) throws SaldoInsuficienteException;
 
-    public void depositar(double valor) {
-        if (valor > 0) {
-            this.saldo += valor;
-
-            // registra transação
-            historicoTransacoes.add(new Transacao("Depósito", valor));
-        } else {
-            System.out.println("Valor inválido para depósito!");
-        }
+    protected void registrarSaque(double valor, String tipo) {
+        saldo -= valor;
+        historicoTransacoes.add(new Transacao(tipo, valor));
     }
 }

@@ -6,18 +6,16 @@ public class ContaPoupanca extends Conta {
 
     @Override
     public void sacar(double valor) throws SaldoInsuficienteException {
-
         if (valor <= 0) {
-            System.out.println("O valor deve ser maior que zero.");
+            System.out.println("O saque deve ser positivo.");
             return;
         }
 
-        if (valor > saldo) {
+        if (valor > getSaldo()) {
             throw new SaldoInsuficienteException("Saldo insuficiente para saque.");
         }
 
-        this.saldo -= valor;
-
-        historicoTransacoes.add(new Transacao("Saque", valor));
+        registrarSaque(valor, "Saque");
+        System.out.println("Saque realizado. Saldo atual: R$ " + String.format("%.2f", getSaldo()));
     }
 }

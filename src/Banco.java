@@ -14,7 +14,6 @@ public class Banco {
     }
 
     public void realizarTransferencia(String origemNum, String destinoNum, double valor) {
-
         Conta origem = buscarConta(origemNum);
         Conta destino = buscarConta(destinoNum);
 
@@ -25,14 +24,10 @@ public class Banco {
 
         try {
             origem.sacar(valor);
-
             destino.depositar(valor);
-
             origem.getHistorico().add(new Transacao("Transferência Enviada", valor));
             destino.getHistorico().add(new Transacao("Transferência Recebida", valor));
-
-            System.out.println("Transferência realizada com sucesso!");
-
+            System.out.println("Transferência realizada com sucesso.");
         } catch (SaldoInsuficienteException e) {
             System.out.println("Erro na transferência: " + e.getMessage());
         }
