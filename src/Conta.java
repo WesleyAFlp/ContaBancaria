@@ -12,6 +12,8 @@ public abstract class Conta {
     public Conta(String numero, String titular, double saldo) {
         this.numero = numero;
         this.titular = titular;
+        this.historicoTransacoes = new ArrayList<>();
+        
         if (saldo < 0.0) {
             System.out.println("Aviso: Saldo inicial negativo. Definindo para 0.0.");
             this.saldo = 0.0;
