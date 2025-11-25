@@ -3,10 +3,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        // Objeto Banco responsável por armazenar e gerenciar todas as contas
         Banco banco = new Banco();
+
+        // Scanner para ler entradas do usuário
         Scanner sc = new Scanner(System.in);
 
+        // Loop do menu principal (executa até o usuário escolher SAIR)
         while (true) {
+
+            // Exibe o menu de opções
             System.out.println("\n===== CAIXA ELETRÔNICO =====");
             System.out.println("1. Criar Conta");
             System.out.println("2. Sacar");
@@ -16,21 +22,26 @@ public class Main {
             System.out.println("6. Extrato");
             System.out.println("7. Sair");
             System.out.print("Escolha: ");
-            
+
             int opcao;
+
+            // Trata possíveis erros na escolha do menu
             try {
                 opcao = Integer.parseInt(sc.nextLine());
             } catch (Exception e) {
-                System.out.println("Entrada inválida!");
+                System.out.println("Entrada inválida! Digite apenas números.");
                 continue;
             }
 
+            // Processa a escolha do usuário
             switch (opcao) {
+
+                // ====================== CRIAR CONTA ======================
                 case 1:
                     System.out.print("Tipo (1 - Corrente / 2 - Poupança): ");
                     int tipo = Integer.parseInt(sc.nextLine());
 
-                    System.out.print("Número: ");
+                    System.out.print("Número da conta: ");
                     String numero = sc.nextLine();
 
                     System.out.print("Titular: ");
@@ -39,76 +50,110 @@ public class Main {
                     System.out.print("Saldo inicial: ");
                     double saldo = Double.parseDouble(sc.nextLine());
 
+                    // Se o usuário escolher conta corrente
                     if (tipo == 1) {
-                        System.out.print("Limite cheque especial: ");
+                        System.out.print("Limite do cheque especial: ");
                         double limite = Double.parseDouble(sc.nextLine());
+
                         banco.adicionarConta(new ContaCorrente(numero, titular, saldo, limite));
-                    } else {
+                    } 
+                    // Se escolher poupança
+                    else {
                         banco.adicionarConta(new ContaPoupanca(numero, titular, saldo));
                     }
 
-                    System.out.println("Conta criada!");
+                    System.out.println("Conta criada com sucesso!");
                     break;
 
+                // ====================== SACAR ======================
                 case 2:
                     System.out.print("Número da conta: ");
                     Conta c1 = banco.buscarConta(sc.nextLine());
 
-                    if (c1 == null) { System.out.println("Conta não encontrada."); break; }
+                    if (c1 == null) {
+                        System.out.println("Conta inexistente.");
+                        break;
+                    }
 
-                    System.out.print("Valor: ");
+                    System.out.print("Valor do saque: ");
+                    double valorSaque = Double.parseDouble(sc.nextLine());
+
                     try {
-                        c1.sacar(Double.parseDouble(sc.nextLine()));
+                        c1.sacar(valorSaque);
                     } catch (SaldoInsuficienteException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
 
+                // ====================== DEPOSITAR ======================
                 case 3:
                     System.out.print("Número da conta: ");
                     Conta c2 = banco.buscarConta(sc.nextLine());
-                    if (c2 == null) { System.out.println("Conta não encontrada."); break; }
 
-                    System.out.print("Valor: ");
-                    c2.depositar(Double.parseDouble(sc.nextLine()));
+                    if (c2 == null) {
+                        System.out.println("Conta não encontrada.");
+                        break;
+                    }
+
+                    System.out.print("Valor do depósito: ");
+                    double valorDeposito = Double.parseDouble(sc.nextLine());
+
+                    c2.depositar(valorDeposito);
                     break;
 
+                // ====================== TRANSFERIR ======================
                 case 4:
-                    System.out.print("Conta origem: ");
+                    System.out.print("Conta de origem: ");
                     String origem = sc.nextLine();
 
-                    System.out.print("Conta destino: ");
+                    System.out.print("Conta de destino: ");
                     String destino = sc.nextLine();
 
-                    System.out.print("Valor: ");
-                    double val = Double.parseDouble(sc.nextLine());
+                    System.out.print("Valor da transferência: ");
+                    double valorTransferencia = Double.parseDouble(sc.nextLine());
 
-                    banco.realizarTransferencia(origem, destino, val);
+                    banco.realizarTransferencia(origem, destino, valorTransferencia);
                     break;
 
+                // ====================== CONSULTAR SALDO ======================
                 case 5:
                     System.out.print("Número da conta: ");
                     Conta c3 = banco.buscarConta(sc.nextLine());
-                    if (c3 != null) System.out.println("Saldo: R$ " + c3.getSaldo());
-                    else System.out.println("Conta não encontrada.");
+
+                    if (c3 == null) {
+                        System.out.println("Conta não encontrada.");
+                    } else {
+                        System.out.printf("Saldo: R$ %.2f\n", c3.getSaldo());
+                    }
                     break;
 
+                // ====================== EXTRATO ======================
                 case 6:
                     System.out.print("Número da conta: ");
                     Conta c4 = banco.buscarConta(sc.nextLine());
-                    if (c4 == null) { System.out.println("Conta não encontrada."); break; }
+
+                    if (c4 == null) {
+                        System.out.println("Conta não encontrada.");
+                        break;
+                    }
 
                     System.out.println("\n=========== EXTRATO ===========");
-                    for (Transacao t : c4.getHistorico()) {
-                        System.out.println(t);
+                    if (c4.getHistorico().isEmpty()) {
+                        System.out.println("Nenhuma transação registrada.");
+                    } else {
+                        for (Transacao t : c4.getHistorico()) {
+                            System.out.println(t);
+                        }
                     }
                     System.out.println("================================");
                     break;
 
+                // ====================== SAIR ======================
                 case 7:
-                    System.out.println("Encerrando...");
+                    System.out.println("Encerrando o sistema...");
                     System.exit(0);
 
+                // ====================== OPÇÃO INVÁLIDA ======================
                 default:
                     System.out.println("Opção inválida!");
             }
