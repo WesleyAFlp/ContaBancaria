@@ -6,9 +6,11 @@ public class ContaCorrente extends Conta {
 
     // 3. Cria o construtor. Chama o construtor da superclasse e inicializa o limite.
     public ContaCorrente(String numero, String titular, double saldoInicial, double limiteChequeEspecial) {
+
         // Chama o construtor da superclasse (Conta)
         super(numero, titular, saldoInicial);
         this.limiteChequeEspecial = limiteChequeEspecial;
+
         // Inicializa o histórico de transações, que estava faltando na classe Conta
         this.historicoTransacoes = new ArrayList<>();
     }
@@ -32,7 +34,7 @@ public class ContaCorrente extends Conta {
         // o Verifique se o valor do saque excede o saldo disponível.
         if (valor > saldoTotalDisponivel) {
             // o Se exceder: Lance a SaldoInsuficienteException.
-            throw new SaldoInsuficiente(
+            throw new SaldoInsuficienteException(
                     "Saldo insuficiente. Saldo disponível (Saldo + Limite): R$" + String.format("%.2f", saldoTotalDisponivel) +
                             ". Valor do saque solicitado: R$" + String.format("%.2f", valor)
             );

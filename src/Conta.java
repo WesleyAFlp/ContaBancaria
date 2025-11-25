@@ -1,6 +1,5 @@
 ﻿import java.util.ArrayList;
 import java.util.List;
-
 // Criando a classe abstrata
 public abstract class Conta {
     protected String numero;
@@ -13,7 +12,7 @@ public abstract class Conta {
         this.numero = numero;
         this.titular = titular;
         this.historicoTransacoes = new ArrayList<>();
-        
+
         if (saldo < 0.0) {
             System.out.println("Aviso: Saldo inicial negativo. Definindo para 0.0.");
             this.saldo = 0.0;

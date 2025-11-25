@@ -18,15 +18,14 @@ public class Banco {
         return contas.get(numero);
     }
 
-    /**
-     * Método para realizar transferência entre duas contas.
-     * Ele:
-     * 1. Busca a conta de origem e de destino
-     * 2. Verifica se ambas existem
-     * 3. Usa try/catch para tentar sacar da origem
-     * 4. Caso o saque funcione, deposita na conta destino
-     * 5. Registra as transações nas duas contas
-     */
+     //* Método para realizar transferência entre duas contas.
+     //* Ele:
+     //* 1. Busca a conta de origem e de destino
+     //* 2. Verifica se ambas existem
+     //* 3. Usa try/catch para tentar sacar da origem
+     //* 4. Caso o saque funcione, deposita na conta destino
+     //* 5. Registra as transações nas duas contas
+
     public void realizarTransferencia(String origemNum, String destinoNum, double valor) {
         Conta origem = buscarConta(origemNum);
         Conta destino = buscarConta(destinoNum);
@@ -45,10 +44,10 @@ public class Banco {
             destino.depositar(valor);
 
             // Registra na conta de origem
-            origem.getHistorico().add(new Transacao("Transferência Enviada", valor));
+            origem.getNumero() .add(new Transacao("Transferência Enviada", valor));
 
             // Registra na conta destino
-            destino.getHistorico().add(new Transacao("Transferência Recebida", valor));
+            destino.getNumero().add(new Transacao("Transferência Recebida", valor));
 
             System.out.println("Transferência realizada com sucesso.");
 
